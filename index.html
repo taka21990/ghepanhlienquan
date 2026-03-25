@@ -3,61 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Công cụ Cắt Ảnh Liên Quân</title>
+    <title>Ghép Ảnh Trang Phục Liên Quân</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+    <style>
+        body { background-color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .drop-zone { border: 2px dashed #cbd5e1; transition: 0.3s; }
+        .drop-zone:hover { border-color: #3b82f6; background-color: #eff6ff; }
+    </style>
 </head>
-<body class="bg-slate-900 text-white min-h-screen flex flex-col items-center py-10">
+<body class="p-4 md:p-10">
 
-    <h1 class="text-3xl font-bold mb-6 text-yellow-500">AOV Skin Cropper Custom</h1>
-    
-    <div class="w-full max-w-2xl bg-slate-800 p-6 rounded-xl shadow-2xl">
-        <input type="file" id="upload" accept="image/*" class="mb-4 block w-full text-sm text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-yellow-500 file:text-slate-900 hover:file:bg-yellow-400">
-
-        <div class="relative w-full h-96 bg-black rounded overflow-hidden mb-4">
-            <img id="image" class="max-w-full hidden">
+    <div class="max-w-5xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="bg-slate-800 p-4 text-white flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="bg-blue-500 p-2 rounded-lg">📸</div>
+                <span class="font-bold text-xl">AOV Skin Merger</span>
+            </div>
+            <button class="text-sm bg-slate-700 px-4 py-2 rounded-lg">Trang chủ</button>
         </div>
 
-        <div class="flex gap-4">
-            <button id="cropBtn" class="bg-blue-600 hover:bg-blue-500 px-6 py-2 rounded-lg font-bold transition">Cắt & Tải về</button>
+        <div class="p-8">
+            <label for="fileInput" class="drop-zone block w-full py-12 rounded-xl cursor-pointer text-center">
+                <div class="text-4xl mb-2">📤</div>
+                <p class="text-slate-600 font-medium">Nhấn vào đây để chọn ảnh trang phục cần ghép</p>
+                <p class="text-xs text-slate-400 mt-2">Lưu ý: Có thể chọn nhiều ảnh cùng lúc</p>
+                <input type="file" id="fileInput" multiple accept="image/*" class="hidden">
+            </label>
+        </div>
+
+        <div class="px-8 pb-8">
+            <div class="border rounded-xl p-6 bg-slate-50">
+                <h2 class="font-bold text-lg mb-4">Thông tin ghép ảnh</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="flex items-center justify-between">
+                        <label class="text-slate-600">Mỗi hàng có</label>
+                        <input type="number" id="cols" value="6" class="border rounded px-3 py-1 w-20 text-center">
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <label class="text-slate-600">Khoảng cách giữa các hàng (px)</label>
+                        <input type="number" id="gap" value="10" class="border rounded px-3 py-1 w-20 text-center">
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <label class="text-slate-600">Số tướng đã sở hữu</label>
+                        <input type="number" id="heroCount" value="100" class="border rounded px-3 py-1 w-20 text-center">
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <label class="text-slate-600">Số trang phục đã sở hữu</label>
+                        <input type="number" id="skinCount" value="200" class="border rounded px-3 py-1 w-20 text-center">
+                    </div>
+                </div>
+
+                <div class="mt-8 flex gap-4">
+                    <button id="renderBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-8 rounded-lg transition">Ghép ảnh ngay</button>
+                    <button id="downloadBtn" class="hidden bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-8 rounded-lg transition">Tải ảnh về</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-8 border-t bg-slate-100 flex justify-center">
+            <canvas id="resultCanvas" class="max-w-full shadow-md bg-white"></canvas>
         </div>
     </div>
 
-    <canvas id="canvas" class="hidden"></canvas>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
     <script>
-        const image = document.getElementById('image');
-        const upload = document.getElementById('upload');
-        const cropBtn = document.getElementById('cropBtn');
-        let cropper;
+        const fileInput = document.getElementById('fileInput');
+        const renderBtn = document.getElementById('renderBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const canvas = document.getElementById('resultCanvas');
+        const ctx = canvas.getContext('2d');
 
-        upload.addEventListener('change', (e) => {
-            const files = e.target.files;
-            const done = (url) => {
-                upload.value = '';
-                image.src = url;
-                image.classList.remove('hidden');
-                if (cropper) cropper.destroy();
-                cropper = new Cropper(image, {
-                    aspectRatio: 1, // Bạn có thể chỉnh 16/9 hoặc 3/4 tùy ý
-                    viewMode: 1,
-                });
-            };
+        let loadedImages = [];
 
-            if (files && files.length > 0) {
-                const reader = new FileReader();
-                reader.onload = () => done(reader.result);
-                reader.readAsDataURL(files[0]);
+        fileInput.addEventListener('change', async (e) => {
+            const files = Array.from(e.target.files);
+            loadedImages = [];
+            
+            for (const file of files) {
+                const img = await loadImage(URL.createObjectURL(file));
+                loadedImages.push(img);
             }
+            alert(`Đã chọn ${loadedImages.length} ảnh. Nhấn "Ghép ảnh ngay" để xem kết quả!`);
         });
 
-        cropBtn.addEventListener('click', () => {
-            if (!cropper) return alert('Vui lòng chọn ảnh trước!');
-            const canvas = cropper.getCroppedCanvas();
+        function loadImage(src) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => resolve(img);
+                img.src = src;
+            });
+        }
+
+        renderBtn.addEventListener('click', () => {
+            if (loadedImages.length === 0) return alert('Vui lòng chọn ảnh trước!');
+
+            const cols = parseInt(document.getElementById('cols').value);
+            const gap = parseInt(document.getElementById('gap').value);
+            const imgW = loadedImages[0].width;
+            const imgH = loadedImages[0].height;
+            
+            const rows = Math.ceil(loadedImages.length / cols);
+            
+            canvas.width = (imgW * cols) + (gap * (cols - 1));
+            canvas.height = (imgH * rows) + (gap * (rows - 1));
+
+            ctx.fillStyle = "#ffffff"; // Nền trắng
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            loadedImages.forEach((img, i) => {
+                const r = Math.floor(i / cols);
+                const c = i % cols;
+                const x = c * (imgW + gap);
+                const y = r * (imgH + gap);
+                ctx.drawImage(img, x, y, imgW, imgH);
+            });
+
+            downloadBtn.classList.remove('hidden');
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        });
+
+        downloadBtn.addEventListener('click', () => {
             const link = document.createElement('a');
-            link.download = 'lien-quan-skin.png';
-            link.href = canvas.toDataURL();
+            link.download = 'bo-suu-tap-lien-quan.png';
+            link.href = canvas.toDataURL('image/png');
             link.click();
         });
     </script>
