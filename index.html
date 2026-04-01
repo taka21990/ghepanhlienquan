@@ -1,174 +1,37 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" translate="no">
+
+
+<!-- Mirrored from crop-aov-skin.vercel.app/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 01 Apr 2026 11:49:11 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TileSnapImage - Pro Profile Creator</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        body { background-color: #0f172a; color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .card { background: #1e293b; border-radius: 16px; border: 1px solid #334155; }
-        input, select { background: #334155 !important; border: 1px solid #475569 !important; color: white !important; border-radius: 8px; padding: 6px 12px; }
-        .btn-primary { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); transition: all 0.3s; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4); }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="google" content="notranslate" />
+  <link rel="icon" type="image/svg+xml" href="vite.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&amp;display=swap"
+    rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TileSnapImage - Ghép ảnh trang phục Liên Quân miễn phí</title>
+    <meta
+      name="description"
+      content="Chúng tôi cung cấp công cụ trực tuyến giúp bạn ghép nhiều ảnh trang phục Liên Quân thành một ảnh duy nhất dạng lưới, đơn giản, nhanh chóng để dễ dàng chia sẻ cho mọi người."
+    />
+    <meta
+      property="og:title"
+      content="TileSnapImage - Ghép ảnh trang phục Liên Quân miễn phí"
+    />
+    <meta
+      property="og:description"
+      content="Ghép nhiều ảnh trang phục Liên Quân thành một ảnh dạng lưới đơn giản, nhanh chóng."
+    />
+  <script type="module" crossorigin src="assets/index-BlxJUcm2.js"></script>
+  <link rel="stylesheet" crossorigin href="assets/index-DDqktZ3Z.css">
 </head>
-<body class="p-4 md:p-8">
-
-    <div class="max-w-6xl mx-auto space-y-8">
-        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-4">
-                <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-2xl shadow-lg"><i class="fas fa-th"></i></div>
-                <div>
-                    <h1 class="text-2xl font-black tracking-tighter italic">TileSnap<span class="text-blue-500">Image</span></h1>
-                    <p class="text-slate-400 text-xs">Công cụ tạo Profile Liên Quân chuyên nghiệp</p>
-                </div>
-            </div>
-            <div class="flex gap-3">
-                <button class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm font-bold"><i class="fas fa-question-circle mr-2"></i>Hướng dẫn</button>
-                <button class="px-4 py-2 rounded-lg bg-pink-600 hover:bg-pink-500 text-sm font-bold"><i class="fas fa-heart mr-2"></i>Donate</button>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            
-            <div class="lg:col-span-1 space-y-6">
-                <div class="card p-6 space-y-4">
-                    <h3 class="font-bold text-blue-400 border-b border-slate-700 pb-2"><i class="fas fa-cog mr-2"></i>Cấu hình Dashboard</h3>
-                    
-                    <div class="grid grid-cols-2 gap-4 text-sm">
-                        <div class="space-y-1">
-                            <label>Số tướng</label>
-                            <input type="number" id="heroCount" value="125" class="w-full">
-                        </div>
-                        <div class="space-y-1">
-                            <label>Số trang phục</label>
-                            <input type="number" id="skinCount" value="426" class="w-full">
-                        </div>
-                        <div class="space-y-1">
-                            <label>Số trận</label>
-                            <input type="number" id="matchCount" value="8977" class="w-full">
-                        </div>
-                        <div class="space-y-1">
-                            <label>Tỷ lệ thắng (%)</label>
-                            <input type="text" id="winRate" value="53.6" class="w-full">
-                        </div>
-                        <div class="space-y-1">
-                            <label>Uy tín</label>
-                            <input type="number" id="creditScore" value="100" class="w-full">
-                        </div>
-                        <div class="space-y-1">
-                            <label>Rank hiện tại</label>
-                            <select id="currentRank" class="w-full">
-                                <option>Cao Thủ</option>
-                                <option>Chiến Tướng</option>
-                                <option>Thách Đấu</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card p-6">
-                    <h3 class="font-bold text-green-400 border-b border-slate-700 pb-2 mb-4"><i class="fas fa-image mr-2"></i>Tải ảnh lên</h3>
-                    <input type="file" id="skinUpload" multiple class="hidden">
-                    <button onclick="document.getElementById('skinUpload').click()" class="w-full py-4 border-2 border-dashed border-slate-600 rounded-xl hover:border-blue-500 hover:bg-slate-700/50 transition">
-                        <i class="fas fa-plus-circle text-2xl mb-2 text-slate-500"></i>
-                        <p class="text-xs text-slate-400">Tải ảnh Skin (Screenshots)</p>
-                    </button>
-                </div>
-
-                <button id="mergeBtn" class="w-full btn-primary py-4 rounded-xl font-bold text-lg shadow-xl shadow-blue-900/20">
-                    <i class="fas fa-wand-magic-sparkles mr-2"></i>GHÉP ẢNH NGAY
-                </button>
-            </div>
-
-            <div class="lg:col-span-2 space-y-4">
-                <div class="flex justify-between items-center">
-                    <h3 class="font-bold text-slate-300">Xem trước kết quả</h3>
-                    <button class="text-blue-400 text-sm hover:underline"><i class="fas fa-download mr-1"></i>Tải về máy</button>
-                </div>
-                <div class="card p-2 bg-[#0a0f1e] min-h-[500px] flex items-center justify-center overflow-auto">
-                    <canvas id="mainCanvas" class="max-w-full rounded shadow-2xl"></canvas>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <script>
-        const skinUpload = document.getElementById('skinUpload');
-        const mergeBtn = document.getElementById('mergeBtn');
-        const canvas = document.getElementById('mainCanvas');
-        const ctx = canvas.getContext('2d');
-        let skinImages = [];
-
-        skinUpload.addEventListener('change', async (e) => {
-            const files = Array.from(e.target.files);
-            skinImages = [];
-            for(let f of files) {
-                const img = await new Promise(r => {
-                    const i = new Image(); i.onload = () => r(i); i.src = URL.createObjectURL(f);
-                });
-                skinImages.push(img);
-            }
-            alert(`Đã nhận ${skinImages.length} ảnh. Hãy nhấn Ghép Ảnh!`);
-        });
-
-        mergeBtn.addEventListener('click', () => {
-            if(skinImages.length === 0) return alert("Bạn chưa tải ảnh skin nào lên!");
-            
-            // Cấu hình dựa trên ảnh mẫu của bạn
-            const cols = 8; // 8 ảnh mỗi hàng như ảnh mẫu
-            const gap = 15;
-            const cardW = 200; // Chiều rộng thẻ skin
-            const cardH = 280; // Chiều cao thẻ skin
-            
-            const totalWidth = (cardW * cols) + (gap * (cols - 1)) + 100;
-            const dashboardHeight = 250;
-            
-            // Tính số hàng (Ảnh mẫu có Dashboard chèn ở hàng thứ 2)
-            const totalRows = Math.ceil(skinImages.length / cols);
-            canvas.width = totalWidth;
-            canvas.height = (cardH * totalRows) + dashboardHeight + (gap * totalRows) + 150;
-
-            // 1. Vẽ nền tối như game
-            ctx.fillStyle = "#1a237e"; // Màu xanh đậm đặc trưng
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // 2. Vẽ Dashboard chuẩn
-            const dbY = cardH + gap + 80; // Dashboard nằm dưới hàng đầu tiên
-            ctx.fillStyle = "rgba(255, 255, 255, 0.1)";
-            ctx.fillRect(50, dbY, canvas.width - 100, dashboardHeight);
-            
-            // Vẽ các thông số (giả lập text chuẩn)
-            ctx.fillStyle = "white";
-            ctx.font = "bold 40px sans-serif";
-            ctx.fillText(document.getElementById('heroCount').value, 150, dbY + 120);
-            ctx.font = "20px sans-serif";
-            ctx.fillText("TƯỚNG", 150, dbY + 160);
-
-            // 3. Vẽ lưới ảnh Skin
-            skinImages.forEach((img, i) => {
-                let r = Math.floor(i / cols);
-                let c = i % cols;
-                let finalY = 50 + (r * (cardH + gap));
-                
-                // Nếu từ hàng thứ 2 trở đi, đẩy xuống để nhường chỗ cho Dashboard
-                if (r >= 1) finalY += dashboardHeight + gap;
-
-                // Giả lập hiệu ứng cắt (Crop) để lấy vùng trung tâm
-                ctx.drawImage(img, 
-                    img.width*0.3, img.height*0.1, img.width*0.4, img.height*0.6, // Cắt giữa
-                    50 + c*(cardW+gap), finalY, cardW, cardH // Vẽ lên canvas
-                );
-
-                // Vẽ viền vàng cho giống game
-                ctx.strokeStyle = "#ffd700";
-                ctx.lineWidth = 2;
-                ctx.strokeRect(50 + c*(cardW+gap), finalY, cardW, cardH);
-            });
-        });
-    </script>
+<body>
+  <div id="root"></div>
 </body>
+
+<!-- Mirrored from crop-aov-skin.vercel.app/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 01 Apr 2026 11:49:12 GMT -->
 </html>
